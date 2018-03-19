@@ -19,7 +19,8 @@
     a.lineCap='round';
     a.lineJoin='round';
 
-    o = (d) => d == 0 ? -10 : d == 2 ? 10 : 0 // get segment direction offset
+    // o = (d) => d == 0 ? -10 : d == 2 ? 10 : 0 // get segment direction offset
+    o = (d) => (d&1 && d-2)*10 // get segment direction offset
 
     r = (d) => { //run loop
         k < 4 && Math.abs(s[0]- k) != 2 && (s[0] = k); // check key pressed
@@ -33,8 +34,8 @@
         }
 
         // move snake in the right direction
-        x += o(s[0]);
-        y += o(s[0]-1);
+        x += o(s[0]+1);
+        y += o(s[0]);
 
         u = x;
         v = y;
@@ -49,8 +50,8 @@
         a.beginPath();
         a.moveTo(u+5,v+5);
         s.map((d) => { // draw out all the snakey bits
-            u -= o(d); // move each snake segment based on direction
-            v -= o(d-1);
+            u -= o(d+1); // move each snake segment based on direction
+            v -= o(d);
             a.lineTo(u+5,v+5);
 
             h = h || x < 0 || 490 < x || y < 0 || 490 < y || (u == x && y == v); // collision detection
