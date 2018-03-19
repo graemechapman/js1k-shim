@@ -9,19 +9,20 @@
     // y = snake y coords
     // q = game speed
     x = y = q = 245; // snake x coords
-    z = 0; // direction - start moving left
     k = 0; // last key pressed
     s = [0]; // snake parts - values assigned to directions [left, up, right, down]
     e = m(); // apple x
     f = m(); // apple y
     h = 0; // game running (1 = game over)
 
+    a.lineWidth=10;
+    a.lineCap='round';
+    a.lineJoin='round';
+
     o = (d) => d == 0 ? -10 : d == 2 ? 10 : 0 // get segment direction offset
 
     r = (d) => { //run loop
-        k < 4 && Math.abs(z- k) != 2 && (z = k); // check key pressed
-        u = x;
-        v = y;
+        k < 4 && Math.abs(s[0]- k) != 2 && (s[0] = k); // check key pressed
 
         //apple detection
         if (e == x && y == f) {
@@ -32,8 +33,11 @@
         }
 
         // move snake in the right direction
-        x += o(z);
-        y += o(z-1);
+        x += o(s[0]);
+        y += o(s[0]-1);
+
+        u = x;
+        v = y;
 
         a.fillStyle='#fff';
         a.fillRect(0,0,500,500); // fill white
@@ -43,30 +47,31 @@
         a.font = '12px serif';
         a.fillText('🍏',e,f+8); //draw the apple - with y offset as it appears above the line
 
-        a.fillRect(u, v, 10, 10); //draw snake head
-        s.map((d,p) => { // draw out all the snakey bits
+        a.beginPath();
+        a.moveTo(u+5,v+5);
+        s.map((d) => { // draw out all the snakey bits
             u -= o(d); // move each snake segment based on direction
             v -= o(d-1);
-            a.fillRect(u, v, 10, 10); //draw snake section
+            a.lineTo(u+5,v+5);
 
-            h=(u == x && y == v); // collision detect with snake head
+            h = h || x < 0 || 490 < x || y < 0 || 490 < y || (u == x && y == v); // collision detection
         });
+        a.strokeStyle='#f00';
+        a.stroke();
+        a.strokeStyle='#000';
 
-        s.unshift(z); // add a new element to the snake, in the right direction
+        s.unshift(s[0]); // add a new element to the snake, in the right direction
         s.pop(); // remove the last section of the snake
-
-        h = h || x < 0 || 490 < x || y < 0 || 490 < y; // wall collision detection
 
         i++;
 
         a.fillText(i*100, 10,15); //write score
 
-        h && (a.font = '48px serif');
-        h && a.fillText('GAME OVER',100,245);
-        h || window.setTimeout(r,q);
+        if(h) {(a.font = '48px serif'); a.fillText('GAME OVER',100,245);}
+        h || setTimeout(r,q);
     }
 
     b.onkeydown = (d) => k = d.which % 37; // modulo of 37 gives us 0-4 in order left, up, right, down
 
-    window.setTimeout(r,q);
+    setTimeout(r,q);
 })();
