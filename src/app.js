@@ -13,7 +13,7 @@
     s = [0]; // snake parts - values assigned to directions [left, up, right, down]
     e = m(); // apple x
     f = m(); // apple y
-    h = 0; // game running (1 = game over)
+    h = 0; // game running (true = game over)
 
     a.lineWidth=10;
     a.lineCap='round';
@@ -44,7 +44,6 @@
         a.strokeRect(0,0,500,500); // add a border
 
         a.fillStyle='#f00';
-        a.font = '12px serif';
         a.fillText('🍏',e,f+8); //draw the apple - with y offset as it appears above the line
 
         a.beginPath();
@@ -67,7 +66,7 @@
 
         a.fillText(i*100, 10,15); //write score
 
-        if(h) {(a.font = '48px serif'); a.fillText('GAME OVER',100,245);}
+        h && a.fillText('GAME OVER',210,245);
         h || setTimeout(r,q);
     }
 
