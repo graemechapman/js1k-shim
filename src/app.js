@@ -1,25 +1,27 @@
 // self executing anonymous, entry point for your app
 ((d) => {
     c.width = c.height = 500; // set canvas size
-    i = 0; //score
+    g = 0;
+    z = (d) => {
+        // x = snake x coords
+        // y = snake y coords
+        // q = game speed
+        // h = dead
+        // i = score
+        // k = last key pressed
+        x = y = q = 245;
+        i = k = h = 0;
+        s = [0]; // snake parts - values assigned to directions [left, up, right, down]
+        e = ~~(Math.random() * 48) * 10 + 15; // apple x
+        f = ~~(Math.random() * 48) * 10 + 15; // apple y
 
-    m = (d) => ~~(Math.random() * 48) * 10 + 15;
-
-    // x = snake x coords
-    // y = snake y coords
-    // q = game speed
-    x = y = q = 245; // snake x coords
-    k = 0; // last key pressed
-    s = [0]; // snake parts - values assigned to directions [left, up, right, down]
-    e = m(); // apple x
-    f = m(); // apple y
-    h = 0; // game running (true = game over)
+        setTimeout(r,q);
+    }
 
     a.lineWidth=10;
     a.lineCap='round';
     a.lineJoin='round';
 
-    // o = (d) => d == 0 ? -10 : d == 2 ? 10 : 0 // get segment direction offset
     o = (d) => (d&1 && d-2)*10 // get segment direction offset
 
     r = (d) => { //run loop
@@ -29,16 +31,13 @@
         if (e == x && y == f) {
             q*=.95;
             s.push(s[i]);
-            e=m();
-            f=m();
+            e = ~~(Math.random() * 48) * 10 + 15;
+            f = ~~(Math.random() * 48) * 10 + 15;
         }
 
         // move snake in the right direction
-        x += o(s[0]+1);
-        y += o(s[0]);
-
-        u = x;
-        v = y;
+        u = x += o(s[0]+1);
+        v = y += o(s[0]);
 
         a.fillStyle='#fff';
         a.fillRect(0,0,500,500); // fill white
@@ -68,10 +67,13 @@
         a.fillText(i*100, 10,15); //write score
 
         h && a.fillText('GAME OVER',210,245);
+        g < i && (g = i);
         h || setTimeout(r,q);
+
+        a.fillText(g*100, 10,35); //write high score
     }
 
-    b.onkeydown = (d) => k = d.which % 37; // modulo of 37 gives us 0-4 in order left, up, right, down
+    b.onkeydown = (d) => (h && z()) || (k = d.which % 37); // modulo of 37 gives us 0-4 in order left, up, right, down
 
-    setTimeout(r,q);
+    z();
 })();
