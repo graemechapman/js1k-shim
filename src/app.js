@@ -27,7 +27,7 @@
     o = (d) => (d&1 && d-2)*10 // get segment direction offset
 
     r = (d) => { //run loop
-        k < 5 && Math.abs(s[0]- k) != 2 && (s[0] = k); // check key pressed
+        k < 5 && s[0]&1^k&1 && (s[0] = k); // check key pressed
 
         //apple detection
         if (e == x && y == f) {
