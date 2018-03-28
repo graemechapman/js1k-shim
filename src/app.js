@@ -1,7 +1,5 @@
 // self executing anonymous, entry point for your app
 ((d) => {
-    c.height = c.width = 500; // set canvas size
-
     g = 0; //high score
 
     // start game
@@ -26,7 +24,7 @@
     r = (d) => { //run loop
         k < 5 && s[0]&1^k&1 && (s[0] = k); // check key pressed
 
-        c.width = 500; // hax... resetting canvas width clears canvas and all properties (font, colours etc)
+        c.height = c.width = 500; // hax... resetting canvas width clears canvas and all properties (font, colours etc)
         a.lineWidth = 10; 
         a.lineJoin = a.lineCap = `round`;
 
@@ -48,7 +46,7 @@
 
         a.beginPath();
         a.moveTo(u+5,v+5);
-        
+
         s.map((d) => { // draw out all the snakey bits
             u -= o(d); // move each snake segment based on direction
             v -= o(d-1);
