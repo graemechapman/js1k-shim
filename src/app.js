@@ -1,7 +1,8 @@
-// self executing anonymous, entry point for your app
+/**
+ * Snake in under 650 bytes
+ */
 ((d) => {
-    g = 0; //high score
-
+    localStorage.s || (localStorage.s = 0);
     // start game
     z = (d) => {
         // x = snake x coords
@@ -62,11 +63,11 @@
 
         a.fillText(++i*100, 10,15); //write score
 
-        h && g < i && (g = i);
+        h && localStorage.s < i && (localStorage.s = i);
 
         h || setTimeout(r,q);
 
-        g && a.fillText(`⭐ ${g*100}`, 10,35); //write high score
+        localStorage.s && a.fillText(`⭐ ${localStorage.s*100}`, 10,35); //write high score
         a.font=`100px A`; // more hax.. no space to give a real font name, but it needs something
         h && a.fillText(`☠️`,180,245);
     }
