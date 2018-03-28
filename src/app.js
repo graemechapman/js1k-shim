@@ -2,8 +2,6 @@
  * Snake in under 500 bytes
  */
 ((d) => {
-    c.width = c.height = 500; // set canvas size
-
     z = (d) => {
         // x = snake x coords
         // y = snake y coords
@@ -25,6 +23,8 @@
     r = (d) => { //run loop
         k < 5 && s[0]&1^k&1 && (s[0] = k); // check key pressed
 
+        c.height = c.width = 500; // hax... resetting canvas width clears canvas and all properties (font, colours etc)
+
         //apple detection
         if (e == x && y == f) {
             s.push(s[i]);
@@ -36,8 +36,6 @@
         u = x += o(s[0]);
         v = y += o(s[0]-1);
 
-        a.fillStyle='#fff';
-        a.fillRect(0,0,500,500); // fill white
         a.strokeRect(0,0,500,500); // add a border
 
         a.fillStyle='#0f0';
@@ -59,7 +57,7 @@
 
     }
 
-    b.onkeydown = (d) => (k = d.which % 36) && h && z(); // modulo of 36 gives us 1-5 in order left, up, right, down
+    b.onkeydown = (d) => (k = d.which % 36) && h && z(); // modulo of 36 gives us 1-4 in order left, up, right, down
 
     z();
 })();
