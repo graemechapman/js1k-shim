@@ -1,26 +1,29 @@
 /**
- * Snake in under 500 bytes
- */
-((d) => {
-    z = (d) => {
-        // x = snake x coords
-        // y = snake y coords
-        // e = apple x
-        // f = apple y
-        // q = game speed
-        // h = dead
-        // i = score
-        // k = last key pressed
-        e = f = x = y = q = 245;
-        i = k = h = 0;
-        s = [2]; // snake parts - values assigned to directions [left, up, right, down]
+* Snake in under 500 bytes
+*/
 
-        r();
-    }
+// x = snake x coords
+// y = snake y coords
+// e = apple x
+// f = apple y
+// q = game speed
+// h = dead
+// i = score
+// k = last key pressed
+z = (d) => {
+    e = f = x = y = 245;
+    i = k = h = 0;
+    s = [2]; // snake parts - values assigned to directions [left, up, right, down]
+}
 
-    o = (d) => (d&1 && d-2)*10 // get segment direction offset
+b.onkeydown = (d) => (k = d.which % 36) && h && z(); // modulo of 36 gives us 1-4 in order left, up, right, down
 
-    r = (d) => { //run loop
+o = (d) => (d&1 && d-2)*10 // get segment direction offset
+
+z();
+
+setInterval((d) => { //run loop
+    if (!h) {
         s.unshift(s[0]); //add a new snake section
 
         //apple detection
@@ -50,11 +53,6 @@
 
             h = x < 0 || 490 < x || y < 0 || 490 < y || (u == x && y == v); // collision detection
         });
-
-        h || setTimeout(r,q);
     }
+}, 250)
 
-    b.onkeydown = (d) => (k = d.which % 36) && h && z(); // modulo of 36 gives us 1-4 in order left, up, right, down
-
-    z();
-})();
