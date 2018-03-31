@@ -5,17 +5,17 @@
     z = (d) => {
         // x = snake x coords
         // y = snake y coords
+        // e = apple x
+        // f = apple y
         // q = game speed
         // h = dead
         // i = score
         // k = last key pressed
-        x = y = q = 245;
+        e = f = x = y = q = 245;
         i = k = h = 0;
-        s = [2,2]; // snake parts - values assigned to directions [left, up, right, down]
-        e = ~~(Math.random() * 48) * 10 + 15; // apple x
-        f = ~~(Math.random() * 48) * 10 + 15; // apple y
+        s = [2]; // snake parts - values assigned to directions [left, up, right, down]
 
-        setTimeout(r,q);
+        r();
     }
 
     o = (d) => (d&1 && d-2)*10 // get segment direction offset
