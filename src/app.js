@@ -17,8 +17,8 @@ z = (d) => {
     h = q = 250;
     i = k = 0;
     s = [j = 2]; // snake parts - values assigned to directions [left, up, right, down]
-    e = ~~(Math.random() * 22) * 10 + 10; // apple x
-    f = ~~(Math.random() * 22) * 10 + 10; // apple y
+    e = ~~(Math.random() * 23) * 10 + 10; // apple x
+    f = ~~(Math.random() * 23) * 10 + 10; // apple y
 
     setTimeout(r,q);
 }
@@ -32,11 +32,13 @@ r = (d) => { //run loop
     s.unshift(j); //add a new snake section
 
     //apple detection
-    if (e == x && y == f) {
-        e = ~~(Math.random() * 22) * 10 + 10; // move the apple
-        f = ~~(Math.random() * 22) * 10 + 10;
-        q-=5;
-    } else s.pop(); // remove the end section unless it's eaten an apple
+    if (e^x | y^f) {
+        s.pop(); // remove the end section unless it's eaten an apple
+    } else {
+        e = ~~(Math.random() * 23) * 10 + 10; // move the apple
+        f = ~~(Math.random() * 23) * 10 + 10;
+        --q;
+    } 
 
     c.height = c.width = 250; // hax... resetting canvas width clears canvas and all context properties (font, colours etc)
     a.lineWidth = 10;
@@ -58,7 +60,7 @@ r = (d) => { //run loop
         v -= o(d - 1);
         a.lineTo(u, v);
 
-        h = h && x%250 && y%250 && (u^x || y^v); // collision detection
+        h = h && x%250 && y%250 && (u^x | y^v); // collision detection
     });
 
     a.strokeStyle=`#0f0`;
