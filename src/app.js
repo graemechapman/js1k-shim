@@ -17,7 +17,7 @@ z = (d) => {
 b.onkeydown = (d) => (k = d.which % 36); // modulo of 36 gives us 1-4 in order left, up, right, down
 
 // get segment direction offset
-o = (d) => (d&1 && d-2)*9;
+o = (d) => (d%2 && d-2);
 
 z();
 
@@ -35,17 +35,17 @@ setInterval((d) => { //run loop
     k < 5 && s[0]&1^k&1 && (s[0] = k); // check key pressed
 
     c.height = c.width = 198; // hax... resetting canvas width clears canvas and all properties (font, colours etc)
+    a.fillRect(0,0,c.height,c.height);
 
     // move snake in the right direction
-    u = x += o(s[0]);
-    v = y += o(s[0]-1);
+    u = x += 9*o(s[0]);
+    v = y += 9*o(s[0]-1);
 
-    a.fillRect(0,0,c.height,c.height);
 
     a.fillStyle='red';
     a.fillRect(e,f,9,9);
     s.map((d) => { // draw out all the snakey bits
-        a.fillRect(u -= o(d), v -= o(d-1), 9, 9); // move each snake segment based on direction and draw them
+        a.fillRect(u -= 9*o(d), v -= 9*o(d-1), 9, 9); // move each snake segment based on direction and draw them
         h = h && (x+9)%207 && (y+9)%207 && (u^x | y^v); // collision detection
     });
 
