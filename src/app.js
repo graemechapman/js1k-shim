@@ -11,7 +11,7 @@
 // k = last key pressed
 z = (d) => {
     k = h = e = f = x = y = 99;
-    s = [2]; // snake parts - values assigned to directions [left, up, right, down]
+    s = [j = 2]; // snake parts - values assigned to directions [left, up, right, down]
 }
 
 b.onkeydown = (d) => (k = d.which % 36); // modulo of 36 gives us 1-4 in order left, up, right, down
@@ -22,7 +22,11 @@ o = (d) => (d%2 && d-2);
 z();
 
 setInterval((d) => { //run loop
-    s.unshift(s[0]); //add a new snake section
+
+    // validate key pressed - must not be alternate direction to current
+    k<5 && k&1^j&1 && (j = k);
+
+    s.unshift(j); //add a new snake section
 
     //apple detection
     if (e^x | y^f) {
@@ -32,15 +36,12 @@ setInterval((d) => { //run loop
         f = new Date%21 * 9;
     }
 
-    k < 5 && s[0]&1^k&1 && (s[0] = k); // check key pressed
-
     c.height = c.width = 198; // hax... resetting canvas width clears canvas and all properties (font, colours etc)
     a.fillRect(0,0,c.height,c.height);
 
     // move snake in the right direction
     u = x += 9*o(s[0]);
     v = y += 9*o(s[0]-1);
-
 
     a.fillStyle='red';
     a.fillRect(e,f,9,9);
